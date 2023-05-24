@@ -1,25 +1,26 @@
 import { Notify } from 'notiflix/build/notiflix-notify-aio';
 
-const randomNum = Math.floor(Math.random() * 100);
-
 const refs = {
   button: document.querySelector('#btn'),
-  input: document.querySelector('#user-num-input').value,
+  input: document.querySelector('#user-num-input'),
 };
+const randomNum = Math.floor(Math.random() * 100);
+
+let count = 0;
 
 refs.button.addEventListener('click', onRandom);
 
 function onRandom() {
-  if (randomNum < Number(refs.input)) {
-    Notify.failure('Менше');
-    return;
+  count += 1;
+
+  if (Number(refs.input.value) > randomNum) {
+    Notify.failure('Введене число більше');
   }
-  if (randomNum > Number(refs.input)) {
-    Notify.failure('Більше');
-    return;
+  if (Number(refs.input.value) < randomNum) {
+    Notify.failure('Введене число менше');
   }
-  if (randomNum === Number(refs.input)) {
+  if (Number(refs.input.value) === randomNum) {
     Notify.success('Вгадали');
-    return;
   }
+  Notify.info(`Кількість спроб: ${count}`);
 }
